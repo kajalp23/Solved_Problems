@@ -1,0 +1,31 @@
+void inorder(Node *r,vector<int>&v){
+    if(r==NULL)
+        return;
+    inorder(r->left,v);
+    v.push_back(r->data);
+    inorder(r->right,v);
+}
+
+int minswaps(Node *r){
+    int cnt=0;
+    if(r==NULL)return cnt;
+    vector<int>v;
+    inorder(r,v);
+    vector<pair<int,int>>v1;
+    for(int i=0;i<v.size();i++){
+        v1.push_back({v[i],i});
+    }
+    sort(v1.begin(),v1.end());
+    for(int i=0;i<v1.size();i++){
+        if(v1[i].second==i)
+            continue;
+        swap(v1[i].first,v1[v1[i].second].first);
+        swap(v1[i].second,v1[v1[i].second].second);
+        if(v1[i].second!=i)
+            i--;
+        cnt++;
+    }
+
+    return cnt;
+
+}
